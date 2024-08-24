@@ -10,8 +10,8 @@
             font-family: Arial, sans-serif;
         }
         img {
-            width: 200px;
-            height: 300px;
+            width: 220px;
+            height: 340px;
             margin-bottom: 10px;
             cursor: pointer;
         }
@@ -43,7 +43,7 @@
         答對：<span id="correct-score">0</span> 錯誤：<span id="wrong-score">0</span>
     </div>
     <img id="photo" src="" alt="猜測照片" onclick="showNextPhoto()">
-    <p id="hint">點擊隨意區域繼續猜</p>
+    <p id="hint">點擊圖片繼續猜</p>
     <br>
     <button id="chien-btn" onclick="checkAnswer('奇恩')">奇恩</button>
     <button id="josh-btn" onclick="checkAnswer('Josh')">Josh</button>
@@ -164,7 +164,7 @@
         function showNextPhoto() {
             currentPhotoIndex++;
             if (currentPhotoIndex >= photos.length) {
-                alert("全部猜完！");
+                alert("恭喜全部猜完！");
                 return;
             }
             document.getElementById("photo").src = photos[currentPhotoIndex];
@@ -184,11 +184,11 @@
             }
 
             if (selectedName === correctAnswer) {
-                resultElement.textContent = "恭喜你，答對了！";
+                resultElement.textContent = "居然矇對了(@[]@!!)";
                 resultElement.style.color = "green";
                 correctScore++;
             } else {
-                resultElement.textContent = "哈哈猜錯了。";
+                resultElement.textContent = "哈哈這樣也猜錯[>\/<]　";
                 resultElement.style.color = "red";
                 wrongScore++;
             }
