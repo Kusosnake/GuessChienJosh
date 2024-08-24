@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>猜猜我是誰</title>
+
     <style>
         body {
             text-align: center;
@@ -40,27 +41,26 @@
 </head>
 <body>
     <h1>猜猜我是誰</h1>
-   
-    <!-- 在此處加入音樂播放器 -->
-    <audio autoplay loop>
+
+    <!-- 音樂播放器 -->
+    <audio id="background-music" loop>
         <source src="background-music.mp3" type="audio/mpeg">
         您的瀏覽器不支持音頻元素。
     </audio>
-    
+
     <div id="score">
         答對：<span id="correct-score">0</span> 錯誤：<span id="wrong-score">0</span>
     </div>
     <img id="photo" src="" alt="猜測照片" onclick="showNextPhoto()">
-    <p id="hint">點擊圖片繼續猜</p>
+    <p id="hint">點擊隨意區域繼續猜</p>
     <br>
-    <button id="chien-btn" onclick="checkAnswer('奇恩')">奇恩</button>
-    <button id="josh-btn" onclick="checkAnswer('Josh')">Josh</button>
+    <button id="chien-btn" onclick="checkAnswerAndPlayMusic('奇恩')">奇恩</button>
+    <button id="josh-btn" onclick="checkAnswerAndPlayMusic('Josh')">Josh</button>
     <p id="result"></p>
 
     <script>
         const photos = [
-            
-"Josh (1).jpg",
+     "Josh (1).jpg",
 "Josh (2).jpg",
 "Josh (3).jpg",
 "Josh (4).jpg",
@@ -153,12 +153,12 @@
 "Chien (35).jpg",
 "Chien (36).jpg"
 
-
         ];
 
         let currentPhotoIndex = -1;
         let correctScore = 0;
         let wrongScore = 0;
+        let isMusicPlaying = false;  // 用來追蹤音樂是否已播放
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -172,12 +172,25 @@
         function showNextPhoto() {
             currentPhotoIndex++;
             if (currentPhotoIndex >= photos.length) {
-                alert("恭喜全部猜完！");
+                alert("全部猜完！");
                 return;
             }
             document.getElementById("photo").src = photos[currentPhotoIndex];
             document.getElementById("result").textContent = "";
             enableButtons();
+        }
+
+        function checkAnswerAndPlayMusic(selectedName) {
+            const music = document.getElementById("background-music");
+            if (!isMusicPlaying) {
+                 music.volume = 0.3; // 設置音量為 30%
+                music.play().catch(function(error) {
+                    console.log("音樂播放被阻止。");
+                });
+                isMusicPlaying = true;
+            }
+
+            checkAnswer(selectedName);
         }
 
         function checkAnswer(selectedName) {
@@ -192,11 +205,11 @@
             }
 
             if (selectedName === correctAnswer) {
-                resultElement.textContent = "居然矇對了(@[]@!!)";
+                resultElement.textContent = "恭喜你，答對了！";
                 resultElement.style.color = "green";
                 correctScore++;
             } else {
-                resultElement.textContent = "哈哈這樣也猜錯[>\/<]　";
+                resultElement.textContent = "哈哈猜錯了。";
                 resultElement.style.color = "red";
                 wrongScore++;
             }
