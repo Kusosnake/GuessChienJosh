@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜猜我是誰</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        img {
+            width: 200px;
+            height: 300px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        #score {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #hint {
+            font-size: 16px;
+            color: gray;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>猜猜我是誰</h1>
+    <div id="score">
+        答對：<span id="correct-score">0</span> 錯誤：<span id="wrong-score">0</span>
+    </div>
+    <img id="photo" src="" alt="猜測照片" onclick="showNextPhoto()">
+    <p id="hint">點擊照片繼續猜</p>
+    <br>
+    <button onclick="checkAnswer('奇恩')">奇恩</button>
+    <button onclick="checkAnswer('Josh')">Josh</button>
+    <p id="result"></p>
+
+    <script>
+        const photos = [
+
+
+"Josh (1).jpg",
+"Josh (2).jpg",
+"Josh (3).jpg",
+"Josh (4).jpg",
+"Josh (5).jpg",
+"Josh (6).jpg",
+"Josh (7).jpg",
+"Josh (8).jpg",
+"Josh (9).jpg",
+"Josh (10).jpg",
+"Josh (11).jpg",
+"Josh (12).jpg",
+"Josh (13).jpg",
+"Josh (14).jpg",
+"Josh (15).jpg",
+"Josh (16).jpg",
+"Josh (17).jpg",
+"Josh (18).jpg",
+"Josh (19).jpg",
+"Josh (20).jpg",
+"Josh (21).jpg",
+"Josh (22).jpg",
+"Josh (23).jpg",
+"Josh (24).jpg",
+"Josh (25).jpg",
+"Josh (26).jpg",
+"Josh (27).jpg",
+"Josh (28).jpg",
+"Josh (29).jpg",
+"Josh (30).jpg",
+"Josh (31).jpg",
+"Josh (32).jpg",
+"Josh (33).jpg",
+"Josh (34).jpg",
+"Josh (35).jpg",
+"Josh (36).jpg",
+"Josh (37).jpg",
+"Josh (38).jpg",
+"Josh (39).jpg",
+"Josh (40).jpg",
+"Josh (41).jpg",
+"Josh (42).jpg",
+"Josh (43).jpg",
+"Josh (44).jpg",
+"Josh (45).jpg",
+"Josh (46).jpg",
+"Josh (47).jpg",
+"Josh (48).jpg",
+"Josh (49).jpg",
+"Josh (50).jpg",
+"Josh (51).jpg",
+"Josh (52).jpg",
+"Josh (53).jpg",
+"Josh (54).jpg",
+"Josh (55).jpg",
+"Josh (56).jpg",
+"Chien (1).jpg",
+"Chien (2).jpg",
+"Chien (3).jpg",
+"Chien (4).jpg",
+"Chien (5).jpg",
+"Chien (6).jpg",
+"Chien (7).jpg",
+"Chien (8).jpg",
+"Chien (9).jpg",
+"Chien (10).jpg",
+"Chien (11).jpg",
+"Chien (12).jpg",
+"Chien (13).jpg",
+"Chien (14).jpg",
+"Chien (15).jpg",
+"Chien (16).jpg",
+"Chien (17).jpg",
+"Chien (18).jpg",
+"Chien (19).jpg",
+"Chien (20).jpg",
+"Chien (21).jpg",
+"Chien (22).jpg",
+"Chien (23).jpg",
+"Chien (24).jpg",
+"Chien (25).jpg",
+"Chien (26).jpg",
+"Chien (27).jpg",
+"Chien (28).jpg",
+"Chien (29).jpg",
+"Chien (30).jpg",
+"Chien (31).jpg",
+"Chien (32).jpg",
+"Chien (33).jpg",
+"Chien (34).jpg",
+"Chien (35).jpg",
+"Chien (36).jpg"
+
+
+
+
+
+
+
+            // 可以繼續添加更多的照片名稱
+        ];
+
+        let currentPhotoIndex = -1; // 用於追踪當前顯示的照片索引
+        let correctScore = 0;
+        let wrongScore = 0;
+
+        // 打亂照片順序的功能
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // 初始打亂照片列表
+        shuffle(photos);
+
+        // 顯示下一張不重複的照片
+        function showNextPhoto() {
+            currentPhotoIndex++;
+            if (currentPhotoIndex >= photos.length) {
+                alert("全部猜完！");
+                return;
+            }
+            document.getElementById("photo").src = photos[currentPhotoIndex];
+            document.getElementById("result").textContent = ""; // 清空上一輪的結果
+        }
+
+        // 檢查答案
+        function checkAnswer(selectedName) {
+            const resultElement = document.getElementById("result");
+            const currentPhoto = photos[currentPhotoIndex];
+
+            let correctAnswer = "";
+            if (currentPhoto.includes("Josh")) {
+                correctAnswer = "Josh";
+            } else if (currentPhoto.includes("Chien")) {
+                correctAnswer = "奇恩";
+            }
+
+            if (selectedName === correctAnswer) {
+                resultElement.textContent = "恭喜你，答對了！";
+                resultElement.style.color = "green";
+                correctScore++;
+            } else {
+                resultElement.textContent = "哈哈猜錯了。";
+                resultElement.style.color = "red";
+                wrongScore++;
+            }
+
+            // 更新分數顯示
+            document.getElementById("correct-score").textContent = correctScore;
+            document.getElementById("wrong-score").textContent = wrongScore;
+        }
+
+        // 頁面加載時顯示第一張照片
+        window.onload = showNextPhoto;
+    </script>
+</body>
+</html>
