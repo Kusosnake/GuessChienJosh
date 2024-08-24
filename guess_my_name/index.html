@@ -43,16 +43,15 @@
         答對：<span id="correct-score">0</span> 錯誤：<span id="wrong-score">0</span>
     </div>
     <img id="photo" src="" alt="猜測照片" onclick="showNextPhoto()">
-    <p id="hint">點擊照片繼續猜</p>
+    <p id="hint">點擊隨意區域繼續猜</p>
     <br>
-    <button onclick="checkAnswer('奇恩')">奇恩</button>
-    <button onclick="checkAnswer('Josh')">Josh</button>
+    <button id="chien-btn" onclick="checkAnswer('奇恩')">奇恩</button>
+    <button id="josh-btn" onclick="checkAnswer('Josh')">Josh</button>
     <p id="result"></p>
 
     <script>
         const photos = [
-
-
+            
 "Josh (1).jpg",
 "Josh (2).jpg",
 "Josh (3).jpg",
@@ -147,19 +146,12 @@
 "Chien (36).jpg"
 
 
-
-
-
-
-
-            // 可以繼續添加更多的照片名稱
         ];
 
-        let currentPhotoIndex = -1; // 用於追踪當前顯示的照片索引
+        let currentPhotoIndex = -1;
         let correctScore = 0;
         let wrongScore = 0;
 
-        // 打亂照片順序的功能
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -167,10 +159,8 @@
             }
         }
 
-        // 初始打亂照片列表
         shuffle(photos);
 
-        // 顯示下一張不重複的照片
         function showNextPhoto() {
             currentPhotoIndex++;
             if (currentPhotoIndex >= photos.length) {
@@ -178,10 +168,10 @@
                 return;
             }
             document.getElementById("photo").src = photos[currentPhotoIndex];
-            document.getElementById("result").textContent = ""; // 清空上一輪的結果
+            document.getElementById("result").textContent = "";
+            enableButtons();
         }
 
-        // 檢查答案
         function checkAnswer(selectedName) {
             const resultElement = document.getElementById("result");
             const currentPhoto = photos[currentPhotoIndex];
@@ -203,12 +193,22 @@
                 wrongScore++;
             }
 
-            // 更新分數顯示
             document.getElementById("correct-score").textContent = correctScore;
             document.getElementById("wrong-score").textContent = wrongScore;
+
+            disableButtons();
         }
 
-        // 頁面加載時顯示第一張照片
+        function disableButtons() {
+            document.getElementById("chien-btn").disabled = true;
+            document.getElementById("josh-btn").disabled = true;
+        }
+
+        function enableButtons() {
+            document.getElementById("chien-btn").disabled = false;
+            document.getElementById("josh-btn").disabled = false;
+        }
+
         window.onload = showNextPhoto;
     </script>
 </body>
